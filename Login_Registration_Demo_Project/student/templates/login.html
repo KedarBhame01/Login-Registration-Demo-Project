@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Form</title>
+</head>
+<body>
+
+<h2>Add Student</h2>
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label for="id_name">Name:</label>
+    <input type="text" name="name" id="id_name" required maxlength="100" placeholder="Enter name">
+  </p>
+
+  <p>
+    <label for="id_age">Age:</label>
+    <input type="number" name="age" id="id_age" required min="0" placeholder="Enter age">
+  </p>
+
+  <p>
+    <label for="id_note">Note:</label>
+    <input type="text" name="note" id="id_note" maxlength="255" placeholder="Any note">
+  </p>
+
+  <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<h2>All Students</h2>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    
+  </tr>
+
+  {% for student in students %}
+    <tr>
+      <td>{{ student.id }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.age }}</td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="5">No students found.</td>
+    </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

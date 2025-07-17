@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Form</title>
+</head>
+<body>
+
+<h2>Add Student</h2>
+
+<form id="studentForm">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="number" name="age" placeholder="Age" required>
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Student List</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Age</th>
+        </tr>
+    </thead>
+    <tbody id="studentTableBody">
+        <!-- Students will be loaded here -->
+    </tbody>
+</table>
+
+<script>
+async function loadStudents() {
+    const response = await fetch('/a/api/');
+    const students = await response.json();
+
+    const tableBody = document.getElementById('studentTableBody');
+    tableBody.innerHTML = ''; // Clear old data
+
+    students.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${student.id}</td>
+            <td>${student.name}</td>
+            <td>${student.age}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+document.getElementById('studentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+        name: form.name.value,
+        age: form.age.value,
+    };
+
+    const response = await fetch('/a/api/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log(result);
+
+    // Clear form
+    form.reset();
+
+    // Reload student list
+    loadStudents();
+});
+
+// Load students on page load
+window.onload = loadStudents;
+</script>
+
+</body>
+</html>
