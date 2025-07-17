@@ -1,9 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Student
 from .forms import StudentForm
 # Create your views here.
 def s(request):
-    # student = Student.object.all()
-    # form = StudentForm()
+    students = Student.objects.all()
+    form = StudentForm()
     
-    return render(request,'login.html')
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('s')
+    return render(request,'login.html',{
+        'form': form,
+        'students': students,
+    })
