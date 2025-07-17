@@ -4,6 +4,6 @@ from django.db import models
 class Student(models.Model):
     name = models.CharField(max_length = 100)
     age = models.IntegerField()
-    note = models.CharField(max_length = 100, default="NO note")
+    # note = models.CharField(max_length = 100, default="NO note")
     def __str__(self):
         return self.name
