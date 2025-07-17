@@ -31,7 +31,7 @@ def student_api(request):
         serializer = studentserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'seccess' : True, 'data': serializer.data}, status=201)
+            return Response({'success' : True, 'data': serializer.data}, status=201)
         return Response(serializer.errors, stutus=400)
 
 def new_login_view(request):
