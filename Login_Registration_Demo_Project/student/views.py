@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect
 from .models import Student
 from .serializers import studentserializer
 from .forms import StudentForm
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 def s(request):
@@ -42,3 +44,34 @@ def student_api(request):
 
 def new_login_view(request):
     return render(request, 'new_login.html')
+
+@api_view(['POST'])
+def login_api(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    
+    if not email or not password:
+        return Response({'success': False, 'message': 'Email and password required'}, status=400)
+    
+    try:
+        student = Student.objects.get(email=email)
+        if check_password(password, student.password):
+            return Response({
+                'success': True, 
+                'message': 'Login successful',
+                'student': {
+                    'id': student.id,
+                    'name': student.name,
+                    'email': student.email
+                }
+            }, status=200)
+        else:
+            return Response({'success': False, 'message': 'Invalid password'}, status=401)
+    except Student.DoesNotExist:
+        return Response({'success': False, 'message': 'Student not found'}, status=404)
+
+def dashboard_view(request):
+    return render(request, 'dashboard.html')
+
+def login_page_view(request):
+    return render(request, 'login_page.html')
