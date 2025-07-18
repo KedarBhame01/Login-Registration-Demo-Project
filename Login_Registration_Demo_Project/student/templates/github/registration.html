@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Registration Form</title>
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #dfe9f3;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.gender-options {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #357ae8;
+}
+
+#message {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+</style>
+<body>
+  <div class="form-container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required />
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" required></textarea>
+
+      <label>Gender:</label>
+      <div class="gender-options">
+        <label><input type="radio" name="gender" value="Male" required /> Male</label>
+        <label><input type="radio" name="gender" value="Female" required /> Female</label>
+        <label><input type="radio" name="gender" value="Other" required /> Other</label>
+      </div>
+
+      <label for="rollno">Roll Number:</label>
+      <input type="text" id="rollno" name="rollno" required />
+
+      <label for="course">Select Course:</label>
+      <select id="course" name="course" required>
+        <option value="">-- Select --</option>
+        <option value="COM">COM</option>
+        <option value="IOT">IOT</option>
+        <option value="ELECT">ELECT</option>
+      </select>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required />
+
+      <label for="aadhar">Upload Aadhar Document (PDF/Image):</label>
+      <input type="file" id="aadhar" name="aadhar" accept=".pdf,.jpg,.jpeg,.png" required />
+
+      <button type="submit">Register</button>
+    </form>
+    <p id="message"></p>
+  </div>
+<script>
+    document.getElementById("registrationForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const dob = document.getElementById("dob").value;
+  const address = document.getElementById("address").value.trim();
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const rollno = document.getElementById("rollno").value.trim();
+  const course = document.getElementById("course").value;
+  const city = document.getElementById("city").value.trim();
+  const aadhar = document.getElementById("aadhar").files[0];
+
+  if (!gender) {
+    document.getElementById("message").textContent = "Please select your gender.";
+    document.getElementById("message").style.color = "red";
+    return;
+  }
+
+  if (!aadhar) {
+    document.getElementById("message").textContent = "Please upload Aadhar document.";
+    document.getElementById("message").style.color = "red";
+    return;
+  }
+
+  // Simulate successful submission
+  document.getElementById("message").style.color = "green";
+  document.getElementById("message").textContent = "Registration successful!";
+  this.reset(); // Clear the form
+});
+
+</script>
+</body>
+</html>
