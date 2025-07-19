@@ -7,6 +7,8 @@ from .forms import StudentForm
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 import json
+
+from rest_framework.generics import GenericAPIView
 # Create your views here.
 
 def s(request):
